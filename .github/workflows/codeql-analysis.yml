@@ -9,13 +9,13 @@ name: "CodeQL"
 on:
   workflow_dispatch:
 
-  #push:
-  #  branches: [ master ]
-  #pull_request:
+  push:
+    branches: [ main ]
+  pull_request:
     # The branches below must be a subset of the branches above
-  #  branches: [ master ]
-  #schedule:
-  #  - cron: '39 16 * * 1'
+    branches: [ main ]
+  schedule:
+    - cron: '39 16 * * 1'
 
 jobs:
   analyze:
@@ -49,9 +49,7 @@ jobs:
         with:
           languages: ${{ matrix.language }}
           config-file: ./.github/codeql/codeql-config.yml
-  
-      - name: Build with Maven
-        run: mvn -DskipTests=true -V -ntp install
+          build-mode: autobuild
   
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
